@@ -43,3 +43,30 @@ Snippets Listing Screen
 | cancancan| User Authentication|
 | rspec-rails| RSpec TDD|
 |factory_girl_rails| RSpec Test Data Factory|
+
+Sequence of steps used to create the project:
+
+> **__The initial push to git was performed soon after step 2.__**
+
+1. Run the command `rails new code_snippets -d postgresql -T` to initiate the project
+2. Include the gems and run `bundle install`
+3. Create the database by running the command `bin/rake db:create`
+4. Install RSpec used for testing by running `bin/rails g rspec:install`
+5. Create the model and the controller at once by issuing the command `bin/rails g resource snippet title:string content:text display:boolean`
+6. After having verified the generated migration file, run the command `bin/rake db:migrate`
+7. Verified the creation of `snippets` table in the local database server.
+8. Now generate the model for `user` by issuing the command `bin/rails g resource user first_name:string last_name:string email:string password:string`
+9. Run `bin/rake db:migrate` to create the table in the database.
+10. Similarly generate the model for `language`. A separate table may not be required here. However, considering that the app could be used with other languages other than the ones noted in the wireframes, a table design was adopted. The command used: `bin/rails g model language title:string`.
+11. Again run `bin/rake db:migrate` to create the table in the database.
+12. Set up association by creating a migration on `users` table by running the command `bin/rails g migration add_user_references_to_snippet user:references`
+13. Similarly set up association by creating a migration on `languages` table by running the command `bin/rails g migration add_language_references_to_snippet language:references`
+14. Set up a controller for the `language` model by issuing the command `bin/rails g controller languages`
+15. Add `has_many :users` and `has_many :languages` to the snippets controller; Add `belongs_to :snippet` on the `users` controller as well as the `languages` controller.
+16. Perform a sanity test by running the application using the command `bin/rails s`. The sanity tests were found to be OK.
+17. We did our second commit soon after we created our models and their associations, controllers and after updating the README.md document.
+  * git status
+  * git add -A
+  * git commit -m "Add `user`,`snippet` and `language` model and their respective controllers. Associate the three models by setting up the relationships."
+  * git push origin master
+18. We start Test Driven Development by writing our RSpec tests on the model.
